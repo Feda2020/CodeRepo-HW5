@@ -6,7 +6,7 @@ $(document).ready(function () {
       currentTime()
       setInterval(currentTime, 1000)
   //Time blocks arrays
-  var timeSlots = ["9pm", "10pm", "11pm", "12am", "1am", "2am", "3am", "4am", "5am"]
+  var timeSlots = ["9 am", "10 am", "11 am", "12 pm", "1 pm", "2 pm", "3 pm", "4 pm", "5 pm"]
     
     //timeSlots for each 
     for(var i = 0; i < timeSlots.length; i++) {
@@ -23,6 +23,7 @@ $(document).ready(function () {
 
      //description attr. 
      descriptionDiv.attr("class", "description col-10")
+     descriptionDiv.attr("data-hour", timeSlots[i])
      timeDiv.attr("class", "hour col-1")
 
      //save button attr.
@@ -42,11 +43,11 @@ $(document).ready(function () {
 
      //change row color according to the time
       var currentTime = moment().hour();
-      $("textarea").each(function() {
-        var timeSlots = $ (this).attr("id");
-        if (timeSlots === currentTime) {
-          $(timeSlots).addClass("present");
-        } else if (timeSlots > currentTime ) {
+      $("textarea").each(function(index, array) {
+        var dataText = parseInt($(this).attr("data-hour"));
+        if (dataText === currentTime) {
+          $(this).addClass("present");
+        } else if (dataText > currentTime ) {
           $(this).addClass("future");
       } else {
           $(this).addClass("past");
@@ -54,10 +55,13 @@ $(document).ready(function () {
       });
 
     }
-    
-    $("saveBtn").click(function(){
-      $(this).localStorege("descriptionDiv");
+      
+    $(".saveBtn").click(function() {
+      localStorage.setItem(timeSlots, descriptionDiv);
+     
     });
+    
+        
     
     
 
