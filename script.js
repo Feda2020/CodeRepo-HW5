@@ -43,11 +43,11 @@ $(document).ready(function () {
 
      //change row color according to the time
       var currentTime = moment().hour();
-      $("textarea").each(function(index, array) {
+      $("textarea").each(function (index, array) {
         var dataText = parseInt($(this).attr("data-hour"));
         if (dataText === currentTime) {
           $(this).addClass("present");
-        } else if (dataText > currentTime ) {
+        } else if (dataText > currentTime) {
           $(this).addClass("future");
       } else {
           $(this).addClass("past");
@@ -56,17 +56,33 @@ $(document).ready(function () {
 
     }
       
-    $(".saveBtn").click(function() {
-      localStorage.setItem(timeSlots, descriptionDiv);
-     
-    });
-    
-        
-    
-    
+    function renderText() {
+      $("#description").empty();
+      descriptionDiv.attr("sataText", dataText[i]);
+      var tx = $("<textarea>");
+      var description = localStorage.getItem(dataText[i]);
+      if(description) {
+        tx.text(timeSlots);
+        var btnSave = $("<button>").text("save");
+        btnSave.addClass("saveBtn");
+  
+        descriptionDiv.append(tx);
+        descriptionDiv.append(btnSave);
+        $("#description").append(descriptionDiv)
+      }
 
+      $(".saveBtn").on("click", function() {
+        var descriptionDiv =$(this).parent().find("textarea").val();
+        var timeSlots = $(this).parent().attr("dataText");
+        localStorage.setItem(timeSlots, descriptionDiv);
+        renderText();
+       
+      });
+    }
+          
+    
+    
+      
+    
+    
 })
-//condition to check past present and future time slots
-//date and time displayed on jumbotron moment().format('MMMM Do YYYY, h:mm:ss a');
-//localstorage.getItem() localstorage.setItem() on button click keyword this
-//hit use the word this
